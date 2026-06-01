@@ -1,12 +1,12 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import App from "./pages/App";
-import GoogleLogin from "./pages/GoogleLogin";
+import App from "./pages/App";;
 import CreateForm from "./pages/CreateForm";
 import FormsPage from "./pages/FormPage";
 import FormLayout from "./pages/FormLayout";
 import HomePage from "./pages/HomePage";
 import ViewForm from "./pages/ViewForm";
 import FormResponse from "./pages/FormResponse";
+import LoginPage from "./pages/LoginPage";
 
 const router = createBrowserRouter([
   {
@@ -46,7 +46,7 @@ const router = createBrowserRouter([
       },
       {
         path: "/login",
-        element: <GoogleLogin />,
+        element: <LoginPage />,
       },
     ],
   },
