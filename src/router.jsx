@@ -31,8 +31,8 @@ const router = createBrowserRouter([
           },
           {
             path: ":id",
-            element: <FormResponse />
-          }
+            element: <FormResponse />,
+          },
         ],
       },
       {
@@ -40,16 +40,15 @@ const router = createBrowserRouter([
         children: [
           {
             path: ":id",
-            element: <ViewForm />
-          }
-        ]
-      }
+            element: <ViewForm />,
+          },
+        ],
+      },
+      {
+        path: "/login",
+        element: <GoogleLogin />,
+      },
     ],
-  },
-
-  {
-    path: "/login",
-    element: <GoogleLogin />,
   },
 ]);
 

@@ -1,6 +1,9 @@
 import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { useAuth } from "../utils/useAuth";
+import { auth } from "../utils/fb";
+import { signOut } from "firebase/auth";
+import toast from "react-hot-toast";
 
 export default function AuthButton() {
   const [isOpen, setIsOpen] = useState(false);
@@ -52,15 +55,6 @@ export default function AuthButton() {
               </div>
             )}
 
-            {/* Menu Link 1: Profile Layout */}
-            {/* <Link
-              href="/forms"
-              onClick={() => setIsOpen(false)}
-              className="w-full text-left px-3 py-2 text-sm text-(--text-2) hover:text-(--text) hover:bg-(--bg-2) rounded-lg transition-colors no-underline inline-flex items-center gap-2"
-            >
-              <span>👤</span> Profile
-            </Link> */}
-
             <Link
               to="/form"
               onClick={() => setIsOpen(false)}
@@ -78,9 +72,14 @@ export default function AuthButton() {
             </Link>
             {/* Menu Link 2: Interactive Logout Action */}
             <button
-              onClick={() => {
+              onClick={async () => {
                 setIsOpen(false);
-                console.log("signout");
+                try {
+                  await signOut(auth);
+                  toast.success("Logged out successfully");
+                } catch (err) {
+                  toast.error(err.message);
+                }
               }}
               className="w-full text-left px-3 py-2 text-sm text-(--danger) hover:bg-red-500/10 rounded-lg transition-colors cursor-pointer inline-flex items-center gap-2 border-none bg-transparent"
             >
