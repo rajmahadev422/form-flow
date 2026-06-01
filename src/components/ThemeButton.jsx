@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import toast from "react-hot-toast";
 
 const ThemeButton = () => {
   const [theme, setTheme] = useState("light");
@@ -14,7 +13,6 @@ const ThemeButton = () => {
     const newTheme = theme === "light" ? "dark" : "light";
 
     setTheme(newTheme);
-    toast.success(newTheme)
     localStorage.setItem("theme", newTheme);
     document.documentElement.setAttribute("data-theme", newTheme);
   };
@@ -22,7 +20,7 @@ const ThemeButton = () => {
   return (
     <button
       onClick={toggleTheme}
-      className="p-1 cursor-pointer"
+      className="p-1 cursor-pointer border border-(--border-2) rounded-xl"
     >
       {theme === "light" ? "🌙 Dark" : "☀️ Light"}
     </button>

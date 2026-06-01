@@ -56,43 +56,76 @@ export default function FormsPage() {
         </div>
       ) : (
         /* Forms Stack List */
-        <div className="flex flex-col gap-3">
+        <div className="flex flex-col gap-4">
           {forms.map((form, i) => (
             <div
               key={form.id}
-              className="bg-(--surface) border border-(--border) rounded-xl px-6 py-5 flex items-center gap-4 fade-up"
-              style={{ animationDelay: `${i * 0.05}s` }}
+              className="bg-(--surface) border border-(--border) rounded p-4 gap-4 flex flex-col sm:flex-row fade-up transition-all hover:border-(--accent)/40"
+              style={{ animationDelay: `${i * 0.1}s` }}
             >
-              {/* Meta Content & Truncation */}
-              <div className="flex-1">
+              {/* Meta Content & Truncation Layer */}
+              <div className="min-w-0 flex-1">
                 <Link
                   to={`/view/${form.id}`}
-                  className="font-semibold text-[0.95rem] text-(--text) whitespace-nowrap overflow-hidden hover:text-(--accent) text-ellipsis"
+                  className="block font-semibold text-[0.95rem] text-(--text) hover:text-(--accent) truncate no-underline transition-colors mb-1"
                 >
-                  {form.title}
+                  {form.title || "Untitled Form"}
                 </Link>
-                <div className="text-[0.78rem] text-(--text-3) mt-0.5">
-                  {form.fields.length} fields ·{" "}
-                  {new Date(form.createdAt.toDate()).toLocaleDateString()}
+
+                {/* Subtitle Badge Row */}
+                <div className="flex items-center gap-2 text-[0.78rem] text-(--text-3) flex-wrap">
+                  <span className="font-medium bg-(--bg-2) px-2 py-0.5 rounded border border-(--border)">
+                    {form.fields.length} fields
+                  </span>
+                  <span className="text-gray-400 select-none">·</span>
+                  <span>
+                    Created{" "}
+                    {form.createdAt?.toDate
+                      ? new Date(form.createdAt.toDate()).toLocaleDateString()
+                      : new Date(form.createdAt).toLocaleDateString()}
+                  </span>
+
+                  {/* Visual Status Indicator pill */}
+                  {form.status === "running" ? (
+                    <span className="ml-1 inline-flex items-center gap-1 text-green-600 dark:text-green-400 font-medium">
+                      <span className="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse" />{" "}
+                      Active
+                    </span>
+                  ) : (
+                    <span className="ml-1 inline-flex items-center gap-1 text-(--text-3) font-medium">
+                      <span className="w-1.5 h-1.5 rounded-full bg-gray-400" />{" "}
+                      Finished
+                    </span>
+                  )}
                 </div>
               </div>
 
-              {/* Actions Button Group */}
-              <div className="flex gap-2 shrink-0 flex-wrap justify-end">
+              {/* Actions Button Group Layout Container */}
+              <div className="flex items-center gap-2">
                 <ShareButton
                   formId={form.id}
                   title={form.title}
                   desc={form.description}
                 />
-                <Link to={`/form/${form.id}`} className="btn-ghost">
+
+                <Link
+                  to={`/form/${form.id}`}
+                  className="btn-ghost p-2 text-base hover:bg-(--bg-2) rounded-lg transition-colors no-underline inline-flex items-center justify-center"
+                  title="View Data"
+                >
                   🧾
                 </Link>
+
                 <button
-                  disabled={form.status !== "running"}
+                  disabled={form.status !== "running" || (up && up === form.id)}
                   onClick={() => updateToComplete(form.id)}
-                  className="btn-danger px-3 py-1.5 text-xs"
+                  className={`px-4 py-2 text-xs font-semibold rounded-lg transition-all border shrink-0 ${
+                    form.status === "running"
+                      ? "bg-red-500/10 text-red-500 border-red-500/20 hover:bg-red-500 hover:text-white cursor-pointer active:scale-[0.98]"
+                      : "bg-(--bg-2) text-(--text-3) border-(--border) opacity-50 cursor-not-allowed"
+                  }`}
                 >
-                  {up && up === form.id ? "Loading..." : "𝐂𝐨𝐦𝐩𝐥𝐞𝐭𝐞𝐝"}
+                  {up && up === form.id ? "Loading..." : "Complete"}
                 </button>
               </div>
             </div>

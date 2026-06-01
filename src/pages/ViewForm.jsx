@@ -2,37 +2,8 @@ import { Link, useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 import FileUploadField from "../components/FileUploadField";
 import FormFooter from "../components/FormFooter";
-import {useSubmitForm} from "../utils/useForm";
+import { useSubmitForm } from "../utils/useForm";
 import FormDeadline from "../components/FormDeadline";
-
-const f = {
-  id: 1,
-  title: "Mahadev",
-  description: "",
-  fields: [
-    {
-      id: "zzx5g3l2",
-      type: "text",
-      label: "Name",
-      placeholder: "",
-      required: true,
-    },
-    {
-      id: "utgm6sxo",
-      type: "email",
-      label: "Email",
-      placeholder: "",
-      required: true,
-    },
-    {
-      id: "lmczejgp",
-      type: "file",
-      label: "Profile Image",
-      placeholder: "",
-      required: true,
-    },
-  ],
-};
 
 export default function ViewForm() {
   const { id } = useParams();
@@ -41,7 +12,7 @@ export default function ViewForm() {
   const [submitted, setSubmitted] = useState(false);
   const [errors, setErrors] = useState({});
 
-  const {getFormById, form, loading, submitForm} = useSubmitForm();
+  const { getFormById, form, loading, submitForm } = useSubmitForm();
 
   useEffect(() => {
     getFormById(id);
@@ -84,7 +55,7 @@ export default function ViewForm() {
     setSubmitting(true);
     try {
       const payload = { data: values, formId: id };
-      await submitForm(payload)
+      await submitForm(payload);
       setSubmitted(true);
     } catch (err) {
       alert("Submission failed: " + err.message);
@@ -112,7 +83,8 @@ export default function ViewForm() {
       </div>
     );
 
-    if(form.status === "completed") return <FormDeadline formTitle={form.title} />
+  // if (form.status === "completed") return <FormDeadline formTitle={form.title} />;
+  
   // State 3: Submission successful screen
   if (submitted)
     return (
@@ -145,7 +117,6 @@ export default function ViewForm() {
 
   return (
     <div className="max-w-3xl mx-auto px-6 py-10">
-      
       {/* Form Context Info Top Header Card */}
       <div className="bg-(--surface) border border-(--border) rounded-xl p-7 mb-5 border-t-4 border-t-(--accent)">
         <h1 className="font-['DM_Serif_Display',serif] text-3xl mb-2">

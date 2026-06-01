@@ -28,9 +28,7 @@ export default function FormResponse() {
     // Lazy load SheetJS engine only upon user interaction
     const { utils, writeFile } = await import("xlsx");
 
-    // Flatten submission objects into a structural spreadsheet row mapping
     const formattedData = responseData.map((sub, index) => {
-      // Safe extraction helper for structural Firebase/Firestore timestamps
       let formattedDate = "—";
       if (sub.createdAt) {
         const dateObj =
@@ -45,21 +43,20 @@ export default function FormResponse() {
         "Submission Date": formattedDate,
       };
 
-      // Correlate dynamic responses with form labels as column headers
       form.fields.forEach((field) => {
-        const val = sub.data?.[field.id];
+        let val = sub.data?.[field.id];
+        if (typeof val === "object") val = val.url;
+
         row[field.label] = Array.isArray(val) ? val.join(", ") : val || "—";
       });
 
       return row;
     });
 
-    // Compile virtual sheets & workbooks
     const worksheet = utils.json_to_sheet(formattedData);
     const workbook = utils.book_new();
     utils.book_append_sheet(workbook, worksheet, "Submissions");
 
-    // Clear dynamic special characters to construct a safe filename
     const safeFileName = `${form.title.replace(/[^a-z0-9]/gi, "_").toLowerCase()}_responses.xlsx`;
 
     // Trigger user browser download stream
@@ -68,6 +65,8 @@ export default function FormResponse() {
 
   if (loading || (!form && !responseData))
     return <div className="text-center py-24 text-(--text-3)">Loading…</div>;
+
+  console.log(responseData);
 
   if (!form)
     return (
@@ -80,7 +79,7 @@ export default function FormResponse() {
     );
 
   return (
-    <div className="max-w-5xl mx-auto px-6 py-8 pb-16">
+    <div className="max-w-5xl mx-auto px-6 py-4">
       {/* Interactive Desktop Header */}
       <div className="no-print flex justify-between items-start mb-8 flex-wrap gap-4">
         <div>
@@ -125,65 +124,88 @@ export default function FormResponse() {
             </button>
           </div>
         ) : (
-          <div className="flex flex-col gap-4">
-            {responseData?.map((sub, i) => (
-              <div
-                key={sub.id}
-                className="bg-(--surface) border border-(--border) rounded-xl p-6 fade-up"
-                style={{ animationDelay: `${i * 0.04}s` }}
-              >
-                {/* Entry Metadata Row */}
-                <div className="flex justify-between items-center mb-4 flex-wrap gap-2">
-                  <span className="bg-(--accent-light) text-(--accent) text-[0.78rem] font-bold px-3 py-1 rounded-md tracking-wide">
-                    Response #{i + 1}
-                  </span>
-                  <span className="text-(--text-3) text-[0.78rem]">
-                    {sub.createdAt?.toDate
-                      ? new Date(sub.createdAt.toDate()).toLocaleString()
-                      : "—"}
-                  </span>
-                </div>
-
-                {/* Data Fields Grid */}
-                <div className="grid grid-cols-[repeat(auto-fill,minmax(260px,1fr))] gap-3">
-                  {form.fields.map((field) => {
-                    const val = sub.data?.[field.id];
-                    const display = Array.isArray(val)
-                      ? val.join(", ")
-                      : val || "—";
-                    return (
-                      <div
+          <div className="w-full bg-(--surface) border border-(--border) rounded shadow-xs overflow-hidden no-print">
+            {/* Scrollable Container to prevent mobile layout breaking */}
+            <div className="overflow-x-auto">
+              <table className="w-full border-collapse text-left text-sm">
+                {/* SPREADSHEET HEADERS */}
+                <thead className="bg-(--bg-2) border-b border-(--border) text-xs font-semibold text-(--text-3) uppercase tracking-wider sticky top-0 select-none">
+                  <tr>
+                    <th className="px-4 py-3.5 border-r border-(--border) w-16 text-center">
+                      #
+                    </th>
+                    <th className="px-4 py-3.5 border-r border-(--border) min-w-40">
+                      Submission Date
+                    </th>
+                    {form.fields.map((field) => (
+                      <th
                         key={field.id}
-                        className="bg-(--bg-2) border border-(--border) rounded-lg p-3"
+                        className="px-4 py-3.5 border-r border-(--border) min-w-35"
                       >
-                        <div className="text-[0.72rem] font-semibold text-(--text-3) uppercase tracking-wider mb-1">
-                          {field.label}
-                        </div>
-                        <div
-                          className={`text-sm wrap-break ${display === "—" ? "text-(--text-3)" : "text-(--text)"}`}
-                        >
-                          {display}
-                        </div>
-                      </div>
+                        {field.label}
+                      </th>
+                    ))}
+                  </tr>
+                </thead>
+
+                {/* SPREADSHEET ROWS */}
+                <tbody className="divide-y divide-(--border)">
+                  {responseData?.map((sub, i) => {
+                    // Process the Firestore timestamp safely
+                    const submissionDate = sub.createdAt?.toDate
+                      ? new Date(sub.createdAt.toDate()).toLocaleString()
+                      : "—";
+
+                    return (
+                      <tr
+                        key={sub.id}
+                        className="hover:bg-(--bg-2)/40 transition-colors group odd:bg-transparent even:bg-(--bg-2)/10"
+                      >
+                        {/* Index Column */}
+                        <td className="px-4 py-3 border-r border-(--border) text-center font-medium text-(--text-3) bg-(--bg-2)/20 group-hover:bg-(--bg-2)/60 transition-colors">
+                          {i + 1}
+                        </td>
+
+                        {/* Timestamp Column */}
+                        <td className="px-4 py-3 border-r border-(--border) text-(--text-2) whitespace-nowrap">
+                          {submissionDate}
+                        </td>
+
+                        {/* Dynamic Field Data Cells */}
+                        {form.fields.map((field) => {
+                          let val = sub.data?.[field.id];
+                          if (typeof val === "object") val = val.url;
+                          const display = Array.isArray(val)
+                            ? val.join(", ")
+                            : val || "—";
+
+                          return (
+                            <td
+                              key={field.id}
+                              className="px-4 py-3 border-r border-(--border) max-w-sm truncate"
+                              title={display !== "—" ? display : undefined} // Tooltip showing full text on hover
+                            >
+                              <span
+                                className={
+                                  display === "—"
+                                    ? "text-(--text-3)"
+                                    : "text-(--text)"
+                                }
+                              >
+                                {display}
+                              </span>
+                            </td>
+                          );
+                        })}
+                      </tr>
                     );
                   })}
-                </div>
-              </div>
-            ))}
+                </tbody>
+              </table>
+            </div>
           </div>
         )}
       </div>
-
-      {/* Native Media Layout Stylesheet overrides */}
-      <style>{`
-        @media print {
-          .no-print { display: none !important; }
-          .print-header { display: block !important; margin-bottom: 1.5rem; }
-          body { background: white !important; color: black !important; font-size: 12px; }
-          .card { border: 1px solid #ddd !important; page-break-inside: avoid; margin-bottom: 12px; }
-          .fade-up { animation: none !important; opacity: 1 !important; transform: none !important; }
-        }
-      `}</style>
     </div>
   );
 }

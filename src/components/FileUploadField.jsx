@@ -1,7 +1,14 @@
+"use client";
 import { useState, useRef, useCallback } from "react";
 
 const MAX_SIZE = 5 * 1024 * 1024; // 5MB
-const ALLOWED_TYPES = ["image/jpeg", "image/png", "image/gif", "image/webp", "application/pdf"];
+const ALLOWED_TYPES = [
+  "image/jpeg",
+  "image/png",
+  "image/gif",
+  "image/webp",
+  "application/pdf",
+];
 const ALLOWED_EXT = ".jpg,.jpeg,.png,.gif,.webp,.pdf";
 
 function formatBytes(bytes) {
@@ -10,55 +17,95 @@ function formatBytes(bytes) {
   return (bytes / (1024 * 1024)).toFixed(1) + " MB";
 }
 
-export default function FileUploadField({ fieldId, required, value, onChange, error }) {
+export default function FileUploadField({
+  fieldId,
+  required,
+  value,
+  onChange,
+  error,
+}) {
   const [dragging, setDragging] = useState(false);
   const [uploading, setUploading] = useState(false);
   const [uploadError, setUploadError] = useState("");
   const inputRef = useRef(null);
 
-  // value shape: { url, name, type, size } | null
+  // Cloudinary Upload Handler
+  const processFile = useCallback(
+    async (file) => {
+      setUploadError("");
 
-  const processFile = useCallback(async (file) => {
-    setUploadError("");
+      // Front-end Validation checks
+      if (!ALLOWED_TYPES.includes(file.type)) {
+        setUploadError(
+          "Only images (JPEG, PNG, GIF, WebP) and PDFs are allowed.",
+        );
+        return;
+      }
+      if (file.size > MAX_SIZE) {
+        setUploadError(
+          `File is too large. Max size is 5MB (your file: ${formatBytes(file.size)}).`,
+        );
+        return;
+      }
 
-    if (!ALLOWED_TYPES.includes(file.type)) {
-      setUploadError("Only images (JPEG, PNG, GIF, WebP) and PDFs are allowed.");
-      return;
-    }
-    if (file.size > MAX_SIZE) {
-      setUploadError(`File is too large. Max size is 5MB (your file: ${formatBytes(file.size)}).`);
-      return;
-    }
+      setUploading(true);
+      try {
+        // ⚠️ REPLACE THESE STRINGS WITH YOUR CLOUDINARY CREDENTIALS
+        const { VITE_CLOUD_NAME, VITE_UPLOAD_PRESET } = import.meta.env;
 
-    setUploading(true);
-    try {
-      const fd = new FormData();
-      fd.append("file", file);
-      const res = await fetch("/api/upload", { method: "POST", body: fd });
-      const data = await res.json();
-      if (!res.ok) throw new Error(data.error || "Upload failed");
-      onChange({ url: data.url, name: data.name, type: data.type, size: data.size });
-    } catch (err) {
-      setUploadError(err.message);
-    } finally {
-      setUploading(false);
-    }
-  }, [onChange]);
+        const fd = new FormData();
+        fd.append("file", file);
+        fd.append("upload_preset", VITE_UPLOAD_PRESET);
 
-  const handleDrop = useCallback((e) => {
+        // Hit Cloudinary's public asset delivery endpoint directly from the browser context
+        const res = await fetch(
+          `https://api.cloudinary.com/v1_1/${VITE_CLOUD_NAME}/auto/upload`,
+          {
+            method: "POST",
+            body: fd,
+          },
+        );
+
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.error?.message || "Upload failed");
+
+        // Pass the complete schema metadata back up to your parent component container
+        onChange({
+          url: data.secure_url,
+          name: file.name,
+          type: file.type,
+          size: file.size,
+        });
+      } catch (err) {
+        setUploadError(err.message);
+      } finally {
+        setUploading(false);
+      }
+    },
+    [onChange],
+  );
+
+  // Drag and Drop Event Callbacks
+  const handleDrop = useCallback(
+    (e) => {
+      e.preventDefault();
+      setDragging(false);
+      const file = e.dataTransfer.files?.[0];
+      if (file) processFile(file);
+    },
+    [processFile],
+  );
+
+  const handleDragOver = (e) => {
     e.preventDefault();
-    setDragging(false);
-    const file = e.dataTransfer.files?.[0];
-    if (file) processFile(file);
-  }, [processFile]);
-
-  const handleDragOver = (e) => { e.preventDefault(); setDragging(true); };
+    setDragging(true);
+  };
   const handleDragLeave = () => setDragging(false);
+
   const handleInputChange = (e) => {
     const file = e.target.files?.[0];
     if (file) processFile(file);
-    // reset input so same file can be re-selected
-    e.target.value = "";
+    e.target.value = ""; // Reset value to enable re-upload of the same file name
   };
 
   const handleRemove = () => {
@@ -69,151 +116,97 @@ export default function FileUploadField({ fieldId, required, value, onChange, er
   const isPdf = value?.type === "application/pdf";
 
   return (
-    <div>
-      {/* Uploaded state */}
+    <div className="w-full">
+      {/* State A: File Uploaded Successfully */}
       {value ? (
-        <div
-          style={{
-            border: "1px solid var(--border)",
-            borderRadius: 10,
-            padding: "1rem",
-            background: "var(--bg-2)",
-            display: "flex",
-            alignItems: "center",
-            gap: "0.875rem",
-          }}
-        >
-          {/* Preview */}
+        <div className="border border-(--border) rounded-xl p-4 bg-(--bg-2) flex items-center gap-3.5">
+          {/* File Thumbnail Preview block */}
           {isPdf ? (
-            <div
-              style={{
-                width: 52,
-                height: 52,
-                borderRadius: 8,
-                background: "var(--danger-light)",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                fontSize: "1.4rem",
-                flexShrink: 0,
-              }}
-            >
+            <div className="w-13 h-13 rounded-lg bg-(--danger-light) flex items-center justify-center text-2xl shrink-0 select-none">
               📄
             </div>
           ) : (
             <img
               src={value.url}
               alt={value.name}
-              style={{
-                width: 52,
-                height: 52,
-                borderRadius: 8,
-                objectFit: "cover",
-                border: "1px solid var(--border)",
-                flexShrink: 0,
-              }}
+              className="w-13 h-13 rounded-lg object-cover border border-(--border) shrink-0"
             />
           )}
 
-          {/* Info */}
-          <div style={{ flex: 1, minWidth: 0 }}>
-            <div
-              style={{
-                fontWeight: 600,
-                fontSize: "0.875rem",
-                color: "var(--text)",
-                whiteSpace: "nowrap",
-                overflow: "hidden",
-                textOverflow: "ellipsis",
-              }}
-            >
+          {/* Upload Metadata Info */}
+          <div className="flex-1 min-w-0">
+            <div className="font-semibold text-sm text-(--text) truncate">
               {value.name}
             </div>
-            <div style={{ fontSize: "0.75rem", color: "var(--text-3)", marginTop: 2 }}>
+            <div className="text-xs text-(--text-3) mt-0.5">
               {formatBytes(value.size)} · {isPdf ? "PDF" : "Image"}
             </div>
             <a
               href={value.url}
               target="_blank"
               rel="noopener noreferrer"
-              style={{ fontSize: "0.75rem", color: "var(--accent)", textDecoration: "none" }}
+              className="text-xs text-(--accent) no-underline hover:underline inline-block mt-0.5"
             >
               View file ↗
             </a>
           </div>
 
-          {/* Remove */}
+          {/* Remove Entry Switch button */}
           <button
+            type="button"
             onClick={handleRemove}
-            className="btn-danger"
-            style={{ padding: "0.35rem 0.6rem", fontSize: "0.85rem", flexShrink: 0 }}
+            className="btn-danger p-1.5 text-xs shrink-0 w-8 h-8 flex items-center justify-center rounded-lg cursor-pointer"
             title="Remove file"
           >
             ✕
           </button>
         </div>
       ) : (
-        /* Drop zone */
+        /* State B: Empty Drag & Drop File Zone Panel */
         <div
           onDrop={handleDrop}
           onDragOver={handleDragOver}
           onDragLeave={handleDragLeave}
           onClick={() => !uploading && inputRef.current?.click()}
-          style={{
-            border: `2px dashed ${dragging ? "var(--accent)" : error ? "var(--danger)" : "var(--border-2)"}`,
-            borderRadius: 10,
-            padding: "2rem 1.5rem",
-            textAlign: "center",
-            cursor: uploading ? "wait" : "pointer",
-            background: dragging ? "var(--accent-light)" : "var(--bg-2)",
-            transition: "all 0.15s",
-            position: "relative",
-          }}
+          className={`border-2 border-dashed rounded-xl px-6 py-8 text-center transition-all duration-150 relative select-none ${
+            dragging
+              ? "border-(--accent) bg-(--accent-light)"
+              : error || uploadError
+                ? "border-(--danger) bg-(--bg-2)"
+                : "border-(--border) bg-(--bg-2)"
+          } ${uploading ? "cursor-wait" : "cursor-pointer"}`}
         >
           <input
             ref={inputRef}
             type="file"
             accept={ALLOWED_EXT}
             onChange={handleInputChange}
-            style={{ display: "none" }}
+            className="hidden"
           />
 
           {uploading ? (
-            <div>
-              <div style={{ fontSize: "1.8rem", marginBottom: "0.5rem" }}>⏳</div>
-              <div style={{ fontWeight: 600, color: "var(--text-2)", fontSize: "0.9rem" }}>
-                Uploading…
+            /* Upload Progress Processing Loop */
+            <div className="flex flex-col items-center justify-center">
+              <div className="text-3xl mb-2 animate-bounce">⏳</div>
+              <div className="font-semibold text-(--text-2) text-sm">
+                Uploading to Cloudinary…
               </div>
-              {/* Progress bar shimmer */}
-              <div
-                style={{
-                  height: 3,
-                  borderRadius: 2,
-                  background: "var(--border)",
-                  marginTop: "1rem",
-                  overflow: "hidden",
-                }}
-              >
-                <div
-                  style={{
-                    height: "100%",
-                    background: "var(--accent)",
-                    borderRadius: 2,
-                    animation: "shimmer 1.2s ease-in-out infinite",
-                    width: "60%",
-                  }}
-                />
+
+              {/* Infinite Shimmer Loading Track */}
+              <div className="h-1 w-32 rounded-full bg-(--border) mt-4 overflow-hidden relative">
+                <div className="h-full bg-(--accent) rounded-full w-3/5 absolute top-0 left-0 animate-[shimmer_1.5s_ease-in-out_infinite]" />
               </div>
             </div>
           ) : (
+            /* Waiting for Input Interaction Dropstate */
             <div>
-              <div style={{ fontSize: "2rem", marginBottom: "0.5rem" }}>
+              <div className="text-4xl mb-2 transition-transform duration-200">
                 {dragging ? "📂" : "☁️"}
               </div>
-              <div style={{ fontWeight: 600, color: "var(--text)", fontSize: "0.9rem", marginBottom: "0.25rem" }}>
+              <div className="font-semibold text-(--text) text-sm mb-1">
                 {dragging ? "Drop file here" : "Drag & drop or click to upload"}
               </div>
-              <div style={{ fontSize: "0.78rem", color: "var(--text-3)" }}>
+              <div className="text-xs text-(--text-3)">
                 Images (JPEG, PNG, GIF, WebP) or PDF · Max 5 MB
               </div>
             </div>
@@ -221,20 +214,12 @@ export default function FileUploadField({ fieldId, required, value, onChange, er
         </div>
       )}
 
-      {/* Upload error */}
+      {/* Logic Error Prompt */}
       {uploadError && (
-        <p style={{ color: "var(--danger)", fontSize: "0.78rem", marginTop: "0.4rem", marginBottom: 0 }}>
+        <p className="text-(--danger) text-[0.78rem] mt-1.5 mb-0 font-medium">
           ⚠ {uploadError}
         </p>
       )}
-
-      <style>{`
-        @keyframes shimmer {
-          0% { transform: translateX(-100%); width: 60%; }
-          50% { transform: translateX(80%); width: 80%; }
-          100% { transform: translateX(200%); width: 60%; }
-        }
-      `}</style>
     </div>
   );
 }

@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { features, steps } from "../utils/data.js";
 import ThemeButton from "../components/ThemeButton.jsx";
+import AdvDisplay from "../components/AdvDisplay.jsx";
 
 export default function HomePage() {
   return (
@@ -8,6 +9,12 @@ export default function HomePage() {
       <span className="flex flex-row-reverse py-1 px-2 sticky top-0 z-100">
         <ThemeButton />
       </span>
+
+      {/* Advertisement */}
+      <div className="sticky top-0 z-10">
+        <AdvDisplay />
+      </div>
+
       {/* Hero Section */}
       <section className="text-center px-5">
         <div className="inline-flex items-center gap-2 bg-(--accent-light) text-(--accent) rounded-full px-4 py-1.2 text-xs font-semibold mb-6 tracking-widest">
