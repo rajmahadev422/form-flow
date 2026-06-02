@@ -173,6 +173,8 @@ export const useResponse = create((set, get) => ({
   response: null,
   responseData: null,
 
+  ownerLoad: false,
+
   isFormOwner: async (formId, currentUserUid) => {
     const formRef = doc(db, "forms", formId);
     const formSnap = await getDoc(formRef);
@@ -183,15 +185,19 @@ export const useResponse = create((set, get) => ({
 
     const formData = formSnap.data();
 
-    return formData.uid === currentUserUid;
+    const owner = formData.uid === currentUserUid;
+    set({owner: owner});
+    return owner
   },
 
   getResponseData: async (id, uid) => {
     if (!id || !uid) return;
     set({ loading: true });
     try {
-      if (!get().isFormOwner(id, uid)) {
-        toast.error("This Form is not created by you!");
+      const isFormOwner = await get().isFormOwner(id, uid);
+      console.log(isFormOwner)
+      if (!isFormOwner) {
+        toast.error("Form not Found");
         return;
       }
       const q = query(collection(db, "submissions"), where("formId", "==", id));

@@ -7,17 +7,20 @@ import { useResponse, useSubmitForm } from "../utils/useForm";
 import { useAuth } from "../utils/useAuth";
 import { BarWaveLoader } from "../components/loader/BarWaveLoader";
 import QRButton from "../components/QRButton";
+import Unauthorized from "../components/Unauthorized";
+import FormNotFound from "../components/not-found/FormNotFound";
 
 export default function FormResponse() {
   const { id } = useParams();
   const printRef = useRef(null);
 
-  const { getResponseData, responseData, loading } = useResponse();
+  const { getResponseData, responseData, loading, isFormOwner, owner } = useResponse();
   const { getFormById, form } = useSubmitForm();
   const { user } = useAuth();
 
   useEffect(() => {
     if (id && user?.uid) {
+      isFormOwner(id, user.id)
       getResponseData(id, user.uid);
       getFormById(id);
     }
@@ -68,14 +71,9 @@ export default function FormResponse() {
   if (loading || (!form && !responseData))
     return <BarWaveLoader />
 
-  if (!form)
+  if (!form || !owner)
     return (
-      <div className="text-center py-24">
-        <p className="text-(--danger)">Form not found.</p>
-        <Link to="/form" className="btn-ghost">
-          ← Back
-        </Link>
-      </div>
+      <FormNotFound />
     );
 
   return (
