@@ -88,12 +88,6 @@ export default function ShowFeedback() {
     <div className="max-w-5xl mx-auto px-4 py-8 pb-16 bg-(--bg) min-h-screen">
       {/* Header Context Segment */}
       <div className="no-print mb-8">
-        <Link
-          to="/dashboard"
-          className="text-(--text-3) text-xs no-underline inline-flex items-center gap-1 mb-2 hover:text-(--text) transition-colors"
-        >
-          ← Dashboard Workspace
-        </Link>
         <h1 className="font-['DM_Serif_Display',serif] text-3xl text-(--text) m-0 tracking-wide">
           User Insights & Reviews
         </h1>

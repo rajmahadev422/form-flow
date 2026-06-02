@@ -11,8 +11,8 @@ export default function Feedback() {
         <div className="absolute -right-16 -bottom-16 w-44 h-44 bg-(--accent)/5 rounded-full blur-2xl pointer-events-none select-none" />
 
         {/* Left Side: Scannable QR Code Panel */}
-        <div className="flex flex-col items-center shrink-0 bg-(--bg-2) rounded-xl border border-(--border)/60 text-center select-none w-full max-w-2xl sm:max-w-none sm:w-auto">
-          <div className="w-40 h-40 bg-white p-2 rounded-lg border border-(--border)/40 flex items-center justify-center shadow-xs">
+        <div className="flex flex-col items-center shrink-0 text-center select-none w-full max-w-2xl sm:max-w-none sm:w-auto">
+          <div className="w-40 h-40 p-2 rounded-lg border border-(--border)/40 flex items-center justify-center shadow-xs">
             <img 
               src='/feedback-qr.png' 
               alt="Scan for feedback form link" 
