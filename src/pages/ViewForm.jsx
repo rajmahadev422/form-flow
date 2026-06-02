@@ -4,6 +4,7 @@ import FileUploadField from "../components/FileUploadField";
 import FormFooter from "../components/FormFooter";
 import { useSubmitForm } from "../utils/useForm";
 import FormDeadline from "../components/FormDeadline";
+import AdvDisplay from "../components/AdvDisplay";
 
 export default function ViewForm() {
   const { id } = useParams();
@@ -84,7 +85,7 @@ export default function ViewForm() {
     );
 
   // if (form.status === "completed") return <FormDeadline formTitle={form.title} />;
-  
+
   // State 3: Submission successful screen
   if (submitted)
     return (
@@ -116,162 +117,165 @@ export default function ViewForm() {
   // State 4: Interactive Input Form View
 
   return (
-    <div className="max-w-3xl mx-auto px-6 py-10">
-      {/* Form Context Info Top Header Card */}
-      <div className="bg-(--surface) border border-(--border) rounded-xl p-7 mb-5 border-t-4 border-t-(--accent)">
-        <h1 className="font-['DM_Serif_Display',serif] text-3xl mb-2">
-          {form.title}
-        </h1>
-        {form.description && (
-          <p className="text-(--text-2) m-0 leading-relaxed">
-            {form.description}
+    <>
+      <AdvDisplay />
+      <div className="max-w-3xl mx-auto px-6 py-10">
+        {/* Form Context Info Top Header Card */}
+        <div className="bg-(--surface) border border-(--border) rounded-xl p-7 mb-5 border-t-4 border-t-(--accent)">
+          <h1 className="font-['DM_Serif_Display',serif] text-3xl mb-2">
+            {form.title}
+          </h1>
+          {form.description && (
+            <p className="text-(--text-2) m-0 leading-relaxed">
+              {form.description}
+            </p>
+          )}
+          <p className="text-(--text-3) text-[0.78rem] mt-3 mb-0">
+            * Required fields
           </p>
-        )}
-        <p className="text-(--text-3) text-[0.78rem] mt-3 mb-0">
-          * Required fields
-        </p>
-      </div>
+        </div>
 
-      {/* Interactive Form Controls List */}
-      <div className="flex flex-col gap-3.5">
-        {form.fields.map((field, i) => (
-          <div
-            key={field.id}
-            className="bg-(--surface) border border-(--border) rounded-xl px-6 py-5 fade-up"
-            style={{ animationDelay: `${i * 0.05}s` }}
-          >
-            <label className="block font-semibold mb-2.5 text-[0.95rem]">
-              {field.label}
-              {field.required && (
-                <span className="text-(--danger) ml-1">*</span>
+        {/* Interactive Form Controls List */}
+        <div className="flex flex-col gap-3.5">
+          {form.fields.map((field, i) => (
+            <div
+              key={field.id}
+              className="bg-(--surface) border border-(--border) rounded-xl px-6 py-5 fade-up"
+              style={{ animationDelay: `${i * 0.05}s` }}
+            >
+              <label className="block font-semibold mb-2.5 text-[0.95rem]">
+                {field.label}
+                {field.required && (
+                  <span className="text-(--danger) ml-1">*</span>
+                )}
+              </label>
+
+              {field.type === "text" && (
+                <input
+                  className="input"
+                  placeholder={field.placeholder}
+                  value={values[field.id] || ""}
+                  onChange={(e) => setValue(field.id, e.target.value)}
+                />
               )}
-            </label>
+              {field.type === "textarea" && (
+                <textarea
+                  className="input resize-y"
+                  placeholder={field.placeholder}
+                  value={values[field.id] || ""}
+                  onChange={(e) => setValue(field.id, e.target.value)}
+                  rows={3}
+                />
+              )}
+              {field.type === "number" && (
+                <input
+                  className="input"
+                  type="number"
+                  placeholder={field.placeholder}
+                  value={values[field.id] || ""}
+                  onChange={(e) => setValue(field.id, e.target.value)}
+                />
+              )}
+              {field.type === "email" && (
+                <input
+                  className="input"
+                  type="email"
+                  placeholder={field.placeholder}
+                  value={values[field.id] || ""}
+                  onChange={(e) => setValue(field.id, e.target.value)}
+                />
+              )}
+              {field.type === "date" && (
+                <input
+                  className="input"
+                  type="date"
+                  value={values[field.id] || ""}
+                  onChange={(e) => setValue(field.id, e.target.value)}
+                />
+              )}
+              {field.type === "select" && (
+                <select
+                  className="input"
+                  value={values[field.id] || ""}
+                  onChange={(e) => setValue(field.id, e.target.value)}
+                >
+                  <option value="">Select an option…</option>
+                  {field.options?.map((opt) => (
+                    <option key={opt} value={opt}>
+                      {opt}
+                    </option>
+                  ))}
+                </select>
+              )}
+              {field.type === "radio" && (
+                <div className="flex flex-col gap-2">
+                  {field.options?.map((opt) => (
+                    <label
+                      key={opt}
+                      className="flex items-center gap-2 cursor-pointer text-sm text-(--text-2)"
+                    >
+                      <input
+                        type="radio"
+                        name={field.id}
+                        value={opt}
+                        checked={values[field.id] === opt}
+                        onChange={() => setValue(field.id, opt)}
+                        className="accent-(--accent) w-4 h-4"
+                      />
+                      {opt}
+                    </label>
+                  ))}
+                </div>
+              )}
+              {field.type === "checkbox" && (
+                <div className="flex flex-col gap-2">
+                  {field.options?.map((opt) => (
+                    <label
+                      key={opt}
+                      className="flex items-center gap-2 cursor-pointer text-sm text-(--text-2)"
+                    >
+                      <input
+                        type="checkbox"
+                        checked={(values[field.id] || []).includes(opt)}
+                        onChange={() => toggleCheckbox(field.id, opt)}
+                        className="accent-(--accent) w-4 h-4"
+                      />
+                      {opt}
+                    </label>
+                  ))}
+                </div>
+              )}
+              {field.type === "file" && (
+                <FileUploadField
+                  fieldId={field.id}
+                  required={field.required}
+                  value={values[field.id] || null}
+                  onChange={(val) => setValue(field.id, val)}
+                  error={errors[field.id]}
+                />
+              )}
 
-            {field.type === "text" && (
-              <input
-                className="input"
-                placeholder={field.placeholder}
-                value={values[field.id] || ""}
-                onChange={(e) => setValue(field.id, e.target.value)}
-              />
-            )}
-            {field.type === "textarea" && (
-              <textarea
-                className="input resize-y"
-                placeholder={field.placeholder}
-                value={values[field.id] || ""}
-                onChange={(e) => setValue(field.id, e.target.value)}
-                rows={3}
-              />
-            )}
-            {field.type === "number" && (
-              <input
-                className="input"
-                type="number"
-                placeholder={field.placeholder}
-                value={values[field.id] || ""}
-                onChange={(e) => setValue(field.id, e.target.value)}
-              />
-            )}
-            {field.type === "email" && (
-              <input
-                className="input"
-                type="email"
-                placeholder={field.placeholder}
-                value={values[field.id] || ""}
-                onChange={(e) => setValue(field.id, e.target.value)}
-              />
-            )}
-            {field.type === "date" && (
-              <input
-                className="input"
-                type="date"
-                value={values[field.id] || ""}
-                onChange={(e) => setValue(field.id, e.target.value)}
-              />
-            )}
-            {field.type === "select" && (
-              <select
-                className="input"
-                value={values[field.id] || ""}
-                onChange={(e) => setValue(field.id, e.target.value)}
-              >
-                <option value="">Select an option…</option>
-                {field.options?.map((opt) => (
-                  <option key={opt} value={opt}>
-                    {opt}
-                  </option>
-                ))}
-              </select>
-            )}
-            {field.type === "radio" && (
-              <div className="flex flex-col gap-2">
-                {field.options?.map((opt) => (
-                  <label
-                    key={opt}
-                    className="flex items-center gap-2 cursor-pointer text-sm text-(--text-2)"
-                  >
-                    <input
-                      type="radio"
-                      name={field.id}
-                      value={opt}
-                      checked={values[field.id] === opt}
-                      onChange={() => setValue(field.id, opt)}
-                      className="accent-(--accent) w-4 h-4"
-                    />
-                    {opt}
-                  </label>
-                ))}
-              </div>
-            )}
-            {field.type === "checkbox" && (
-              <div className="flex flex-col gap-2">
-                {field.options?.map((opt) => (
-                  <label
-                    key={opt}
-                    className="flex items-center gap-2 cursor-pointer text-sm text-(--text-2)"
-                  >
-                    <input
-                      type="checkbox"
-                      checked={(values[field.id] || []).includes(opt)}
-                      onChange={() => toggleCheckbox(field.id, opt)}
-                      className="accent-(--accent) w-4 h-4"
-                    />
-                    {opt}
-                  </label>
-                ))}
-              </div>
-            )}
-            {field.type === "file" && (
-              <FileUploadField
-                fieldId={field.id}
-                required={field.required}
-                value={values[field.id] || null}
-                onChange={(val) => setValue(field.id, val)}
-                error={errors[field.id]}
-              />
-            )}
+              {errors[field.id] && field.type !== "file" && (
+                <p className="text-(--danger) text-[0.78rem] mt-1.5 mb-0">
+                  ⚠ {errors[field.id]}
+                </p>
+              )}
+            </div>
+          ))}
+        </div>
 
-            {errors[field.id] && field.type !== "file" && (
-              <p className="text-(--danger) text-[0.78rem] mt-1.5 mb-0">
-                ⚠ {errors[field.id]}
-              </p>
-            )}
-          </div>
-        ))}
+        {/* Navigation & Submit Action Row */}
+        <div className="mt-6 flex gap-3 justify-between items-center flex-wrap">
+          <button
+            onClick={handleSubmit}
+            className="btn-primary min-w-30"
+            disabled={submitting}
+          >
+            {submitting ? "Submitting…" : "Submit →"}
+          </button>
+        </div>
+        <FormFooter />
       </div>
-
-      {/* Navigation & Submit Action Row */}
-      <div className="mt-6 flex gap-3 justify-between items-center flex-wrap">
-        <button
-          onClick={handleSubmit}
-          className="btn-primary min-w-30"
-          disabled={submitting}
-        >
-          {submitting ? "Submitting…" : "Submit →"}
-        </button>
-      </div>
-      <FormFooter />
-    </div>
+    </>
   );
 }

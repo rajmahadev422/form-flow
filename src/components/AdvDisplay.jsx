@@ -13,9 +13,9 @@ export default function AdvDisplay({
   if (!isVisible) return null;
 
   return (
-    <div className="w-full mx-auto px-4 no-print">
+    <div className="w-full mx-auto no-print">
       {/* Outer Banner Wrapper */}
-      <div className="relative bg-(--success-light) border border-(--border) rounded overflow-hidden p-4 sm:p-5 flex flex-col md:flex-row items-center gap-5 shadow-xs transition-all hover:shadow-sm hover:border-(--accent)/30 group">
+      <div className="relative bg-(--surface) overflow-hidden p-4 sm:p-5 flex flex-col md:flex-row items-center gap-5 shadow-xs transition-all hover:shadow-sm hover:border-(--accent)/30 group">
         
         {/* Top Header Badge Row */}
         <div className="absolute top-3 left-4 flex items-center gap-1.5 z-10 select-none">
@@ -36,7 +36,7 @@ export default function AdvDisplay({
         )}
 
         {/* Ad Media/Visual Panel */}
-        <div className="w-full md:w-60 h-40 sm:h-45 md:h-32.5 rounded-xl overflow-hidden bg-(--bg-2) shrink-0 relative mt-4 md:mt-0">
+        <div className="w-full md:w-60 h-40 sm:h-45 md:h- rounded-xl overflow-hidden bg-(--bg-2) shrink-0 relative mt-4 md:mt-0">
           <img
             src={imageUrl}
             alt={title}

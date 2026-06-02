@@ -6,6 +6,7 @@ import { useEffect } from "react";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "../utils/fb.js";
 import { useAuth } from "../utils/useAuth.js";
+import AdvDisplay from "../components/AdvDisplay";
 
 export default function App() {
   const { set, loading, user } = useAuth();
@@ -28,11 +29,14 @@ export default function App() {
     return unsubscribe;
   }, [set]);
 
-  if(loading) return <p>Loading...</p>
+  if (loading) return <p>Loading...</p>;
   return (
     <>
       <Toaster position="top-center" />
-      <Outlet />
+      <main className="block">
+        <Outlet />
+      </main>
+      <AdvDisplay />
     </>
   );
 }

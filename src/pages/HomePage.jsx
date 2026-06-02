@@ -6,14 +6,9 @@ import AdvDisplay from "../components/AdvDisplay.jsx";
 export default function HomePage() {
   return (
     <div className="bg-(--bg) grid gap-5">
-      <span className="flex flex-row-reverse py-1 px-2 sticky top-0 z-100">
+      <span className="block py-1 px-2 fixed top-0 right-0 z-100">
         <ThemeButton />
       </span>
-
-      {/* Advertisement */}
-      <div className="sticky top-0 z-10">
-        <AdvDisplay />
-      </div>
 
       {/* Hero Section */}
       <section className="text-center px-5">
