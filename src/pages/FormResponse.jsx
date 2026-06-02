@@ -66,8 +66,6 @@ export default function FormResponse() {
   if (loading || (!form && !responseData))
     return <div className="text-center py-24 text-(--text-3)">Loading…</div>;
 
-  console.log(responseData);
-
   if (!form)
     return (
       <div className="text-center py-24">
