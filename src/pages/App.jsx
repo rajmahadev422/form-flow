@@ -7,6 +7,7 @@ import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "../utils/fb.js";
 import { useAuth } from "../utils/useAuth.js";
 import AdvDisplay from "../components/AdvDisplay";
+import { AuraLoader } from "../components/loader/AuraLoader";
 
 export default function App() {
   const { set, loading, user } = useAuth();
@@ -29,7 +30,7 @@ export default function App() {
     return unsubscribe;
   }, [set]);
 
-  if (loading) return <p>Loading...</p>;
+  if (loading) return <AuraLoader />;
   return (
     <>
       <Toaster position="top-center" />

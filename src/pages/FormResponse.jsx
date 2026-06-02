@@ -5,6 +5,8 @@ import ShareButton from "../components/ShareButton";
 import { handleShare } from "../utils/data";
 import { useResponse, useSubmitForm } from "../utils/useForm";
 import { useAuth } from "../utils/useAuth";
+import { BarWaveLoader } from "../components/loader/BarWaveLoader";
+import QRButton from "../components/QRButton";
 
 export default function FormResponse() {
   const { id } = useParams();
@@ -64,7 +66,7 @@ export default function FormResponse() {
   };
 
   if (loading || (!form && !responseData))
-    return <div className="text-center py-24 text-(--text-3)">Loading…</div>;
+    return <BarWaveLoader />
 
   if (!form)
     return (
@@ -96,6 +98,7 @@ export default function FormResponse() {
           </p>
         </div>
         <div className="flex gap-3 flex-wrap">
+          <QRButton formId={id} />
           <ShareButton formId={id} title={form.title} desc={form.description} />
           {responseData?.length > 0 && (
             <button

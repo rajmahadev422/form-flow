@@ -4,6 +4,7 @@ import ShareButton from "../components/ShareButton";
 import Navbar from "../components/Navbar";
 import { useForm } from "../utils/useForm.js";
 import { useAuth } from "../utils/useAuth";
+import { BarWaveLoader } from "../components/loader/BarWaveLoader.jsx";
 
 export default function FormsPage() {
   const { getUserForm, forms, loading, updateToComplete, up } = useForm();
@@ -17,7 +18,7 @@ export default function FormsPage() {
     console.log("form deleted", id);
   };
 
-  if (!forms) return <p>Loading...</p>;
+  if (!forms) return <BarWaveLoader />;
 
   return (
     <div className="max-w-5xl mx-auto px-6 py-8">
