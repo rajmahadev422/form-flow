@@ -5,7 +5,7 @@ import AdvDisplay from "../components/AdvDisplay.jsx";
 
 export default function HomePage() {
   return (
-    <div className="bg-(--bg) grid gap-5">
+    <div className="bg-(--bg) grid gap-5 pt-5">
       <span className="block py-1 px-2 fixed top-0 right-0 z-100">
         <ThemeButton />
       </span>
