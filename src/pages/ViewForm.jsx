@@ -118,7 +118,6 @@ export default function ViewForm() {
 
   return (
     <>
-      <AdvDisplay />
       <div className="max-w-3xl mx-auto px-6 py-10">
         {/* Form Context Info Top Header Card */}
         <div className="bg-(--surface) border border-(--border) rounded-xl p-7 mb-5 border-t-4 border-t-(--accent)">
