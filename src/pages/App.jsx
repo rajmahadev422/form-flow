@@ -34,7 +34,7 @@ export default function App() {
   return (
     <>
       <Toaster position="top-center" />
-      <main className="block">
+      <main className="block no-scroll">
         <Outlet />
       </main>
       <AdvDisplay />

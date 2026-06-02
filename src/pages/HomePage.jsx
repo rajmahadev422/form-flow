@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import { features, steps } from "../utils/data.js";
 import ThemeButton from "../components/ThemeButton.jsx";
 import AdvDisplay from "../components/AdvDisplay.jsx";
+import Feedback from "../components/Feedback.jsx";
 
 export default function HomePage() {
   return (
@@ -117,6 +118,7 @@ export default function HomePage() {
           </div>
         </div>
       </section>
+      <Feedback />
     </div>
   );
 }
