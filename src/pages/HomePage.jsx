@@ -1,23 +1,25 @@
 import { Link } from "react-router-dom";
 import { features, steps } from "../utils/data.js";
-import ThemeButton from "../components/ThemeButton.jsx";
-import AdvDisplay from "../components/AdvDisplay.jsx";
-import Feedback from "../components/Feedback.jsx";
-import ShowFeedback from "../components/ShowFeedback.jsx";
+import ThemeButton from "../components/ThemeButton";
+import AdvDisplay from "../components/AdvDisplay";
+import Feedback from "../components/Feedback";
+import ShowFeedback from "../components/ShowFeedback";
+import AuthButton from "../components/AuthButton";
+import Navbar from "../components/Navbar";
+import EyeFace from "../components/EyeFace.jsx";
 
 export default function HomePage() {
   return (
-    <div className="bg-(--bg) grid gap-5 pt-5">
-      <span className="block py-1 px-2 fixed top-0 right-0 z-100">
-        <ThemeButton />
-      </span>
+    <div className="bg-(--bg) grid gap-5">
+
+      <Navbar />
 
       {/* Hero Section */}
       <section className="text-center px-5">
         <div className="inline-flex items-center gap-2 bg-(--accent-light) text-(--accent) rounded-full px-4 py-1.2 text-xs font-semibold mb-6 tracking-widest">
           ✦ FORM BUILDER
         </div>
-        <h1 className="font-['DM_Serif_Display',serif] text-[clamp(2.5rem,6vw,4rem)] line-height-[1.1] text-(--text) mb-5">
+        <h1 className="font-['DM_Serif_Display',serif] text-[clamp(2.5rem,6vw,4rem)] text-(--text)">
           Build forms{" "}
           <em className="text-(--accent) italic not-italic-none">
             beautifully
@@ -25,21 +27,17 @@ export default function HomePage() {
           <br />
           in minutes
         </h1>
+        <EyeFace />
+
         <p className="text-(--text-2) text-lg leading-relaxed max-w-130 mx-auto mb-10">
           FormFlow lets you create, share, and analyze forms — with a clean
           interface and PDF export built in.
         </p>
         <div className="flex gap-3 justify-center flex-wrap">
-          <Link
-            to="form/create"
-            className="btn-primary btn-style"
-          >
+          <Link to="form/create" className="btn-primary btn-style">
             ✨ Create a Form
           </Link>
-          <Link
-            to="/form"
-            className="btn-ghost btn-style"
-          >
+          <Link to="/form" className="btn-ghost btn-style">
             📋 My Forms
           </Link>
         </div>

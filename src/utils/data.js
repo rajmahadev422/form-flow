@@ -29,12 +29,12 @@ export const features = [
 
 export const FIELD_TYPES = [
   { type: "text", label: "Short Text", icon: "T" },
-  { type: "textarea", label: "Long Text", icon: "¶" },
+  { type: "long text", label: "Long Text", icon: "¶" },
   { type: "number", label: "Number", icon: "#" },
   { type: "email", label: "Email", icon: "@" },
   { type: "select", label: "Dropdown", icon: "▾" },
-  { type: "radio", label: "Radio", icon: "◉" },
-  { type: "checkbox", label: "Checkbox", icon: "☑" },
+  { type: "single choice", label: "Radio", icon: "◉" },
+  { type: "multiple choice", label: "Checkbox", icon: "☑" },
   { type: "date", label: "Date", icon: "📅" },
   { type: "file", label: "File Upload", icon: "📎" },
 ];
