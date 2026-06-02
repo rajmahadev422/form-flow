@@ -7,7 +7,7 @@ import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "../utils/fb.js";
 import { useAuth } from "../utils/useAuth.js";
 import AdvDisplay from "../components/AdvDisplay";
-import { AuraLoader } from "../components/loader/AuraLoader";
+import { AuraLoader } from "../components/Loader.jsx";
 
 export default function App() {
   const { set, loading, user } = useAuth();

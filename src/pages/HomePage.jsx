@@ -3,6 +3,7 @@ import { features, steps } from "../utils/data.js";
 import ThemeButton from "../components/ThemeButton.jsx";
 import AdvDisplay from "../components/AdvDisplay.jsx";
 import Feedback from "../components/Feedback.jsx";
+import ShowFeedback from "../components/ShowFeedback.jsx";
 
 export default function HomePage() {
   return (
@@ -31,13 +32,13 @@ export default function HomePage() {
         <div className="flex gap-3 justify-center flex-wrap">
           <Link
             to="form/create"
-            className="bg-(--accent) text-white px-8 py-3 rounded-xl no-underline font-semibold text-base inline-flex items-center gap-1.5"
+            className="btn-primary btn-style"
           >
             ✨ Create a Form
           </Link>
           <Link
             to="/form"
-            className="bg-(--surface) text-(--text) border border-(--border) px-8 py-3 rounded-xl no-underline font-semibold text-base inline-flex items-center gap-1.5"
+            className="btn-ghost btn-style"
           >
             📋 My Forms
           </Link>
@@ -119,6 +120,7 @@ export default function HomePage() {
         </div>
       </section>
       <Feedback />
+      <ShowFeedback />
     </div>
   );
 }

@@ -5,10 +5,10 @@ import ShareButton from "../components/ShareButton";
 import { handleShare } from "../utils/data";
 import { useResponse, useSubmitForm } from "../utils/useForm";
 import { useAuth } from "../utils/useAuth";
-import { BarWaveLoader } from "../components/loader/BarWaveLoader";
 import QRButton from "../components/QRButton";
 import Unauthorized from "../components/Unauthorized";
 import FormNotFound from "../components/not-found/FormNotFound";
+import { BarWaveLoader } from "../components/Loader";
 
 export default function FormResponse() {
   const { id } = useParams();

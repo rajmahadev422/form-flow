@@ -4,7 +4,7 @@ import ShareButton from "../components/ShareButton";
 import Navbar from "../components/Navbar";
 import { useForm } from "../utils/useForm.js";
 import { useAuth } from "../utils/useAuth";
-import { BarWaveLoader } from "../components/loader/BarWaveLoader.jsx";
+import { BarWaveLoader } from "../components/Loader.jsx";
 
 export default function FormsPage() {
   const { getUserForm, forms, loading, updateToComplete, up } = useForm();

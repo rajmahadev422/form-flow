@@ -11,8 +11,8 @@ export default function Feedback() {
         <div className="absolute -right-16 -bottom-16 w-44 h-44 bg-(--accent)/5 rounded-full blur-2xl pointer-events-none select-none" />
 
         {/* Left Side: Scannable QR Code Panel */}
-        <div className="flex flex-col items-center shrink-0 bg-(--bg-2) p-4 rounded-xl border border-(--border)/60 text-center select-none w-full max-w-2xl sm:max-w-none sm:w-auto">
-          <div className="w-32 h-32 md:w-36 md:h-36 bg-white p-2 rounded-lg border border-(--border)/40 flex items-center justify-center shadow-xs">
+        <div className="flex flex-col items-center shrink-0 bg-(--bg-2) rounded-xl border border-(--border)/60 text-center select-none w-full max-w-2xl sm:max-w-none sm:w-auto">
+          <div className="w-40 h-40 bg-white p-2 rounded-lg border border-(--border)/40 flex items-center justify-center shadow-xs">
             <img 
               src='/feedback-qr.png' 
               alt="Scan for feedback form link" 
@@ -38,12 +38,12 @@ export default function Feedback() {
           </p>
 
           {/* Action Row */}
-          <div className="flex flex-col sm:flex-row items-center gap-3.5 flex-wrap">
+          <div className="flex justify-center items-center gap-3.5 flex-wrap">
             <a
               href={feedbackUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="w-full sm:w-auto bg-(--accent) text-white font-semibold text-sm px-5 py-3 rounded-xl no-underline text-center shadow-xs hover:brightness-110 transition-all active:scale-[0.99] inline-flex items-center justify-center gap-2"
+              className="btn-primary btn-style"
             >
               ✍️ Open Feedback Form
             </a>

@@ -81,24 +81,29 @@ button {
   border-radius: 12px;
 }
 
+.btn-style {
+  transition: all;
+}
+.btn-style:hover {
+  scale: 1.05;
+  border-radius: calc(infinity * 1px);
+}
 .btn-primary {
   background: var(--accent);
   color: white;
   border: none;
-  border-radius: 8px;
+  border-radius: 4px;
   padding: 0.5rem 1.25rem;
   font-weight: 500;
   cursor: pointer;
-  transition: background 0.15s, transform 0.1s;
+  transition: all 0.15s, transform 0.1s;
   display: inline-flex;
   align-items: center;
   gap: 0.4rem;
-  font-size: 0.875rem;
 }
 
 .btn-primary:hover {
   background: var(--accent-hover);
-  transform: translateY(-1px);
 }
 
 .btn-primary:active {
@@ -117,7 +122,6 @@ button {
   display: inline-flex;
   align-items: center;
   gap: 0.4rem;
-  font-size: 0.875rem;
 }
 
 .btn-ghost:hover {
