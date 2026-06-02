@@ -107,9 +107,6 @@ export default function ViewForm() {
           >
             Submit another
           </button>
-          <Link href={`/data/${id}`} className="btn-primary">
-            View responses →
-          </Link>
         </div>
       </div>
     );
