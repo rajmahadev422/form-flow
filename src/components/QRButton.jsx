@@ -4,7 +4,7 @@ export default function QRButton({ formId }) {
   const url = `${window.location.origin}/view/${formId}`;
 
   const downloadQRCode = async () => {
-    const fileName = `qrcode-${formId}.png`
+    const fileName = form-flow-qrcode.png;
     try {
       const dataUrl = await QRCode.toDataURL(url, {
         width: 500,
