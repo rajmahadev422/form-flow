@@ -84,7 +84,7 @@ export default function ViewForm() {
       </div>
     );
 
-  // if (form.status === "completed") return <FormDeadline formTitle={form.title} />;
+  if (form.status === "completed") return <FormDeadline formTitle={form.title} />;
 
   // State 3: Submission successful screen
   if (submitted)
