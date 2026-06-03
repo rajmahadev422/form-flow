@@ -2,17 +2,20 @@ import { Link } from "react-router-dom";
 import ThemeButton from "./ThemeButton";
 import { useLocation } from "react-router-dom";
 import AuthButton from "./AuthButton";
+import { FormFlowLogoHex } from "./Logo";
 
 export default function Navbar() {
   const path = useLocation().pathname;
 
   return (
-    <nav className="sticky top-0 z-100 justify-between flex h-15 items-center gap-6 border-b border-(--border) bg-(--surface) px-6 backdrop-blur">
+    <nav className="sticky top-0 z-100 justify-between flex h-15 items-center gap-6 border-b border-(--border) bg-(--surface) px-3 backdrop-blur">
       <Link
         to="/"
-        className="mr-2 text-[1.3rem] font-normal no-underline text-(--accent) font-['DM_Serif_Display',serif]"
+        className="mr-2 flex items-center gap-2 text-[1.3rem] font-normal no-underline text-(--accent) font-['DM_Serif_Display',serif]"
       >
-        FormFlow
+        <FormFlowLogoHex />
+
+        <span className="hidden sm:block">FormFlow</span>
       </Link>
 
       <div className="flex-1 gap-1 hidden sm:flex">
