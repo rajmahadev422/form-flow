@@ -20,9 +20,9 @@ const ThemeButton = () => {
   return (
     <button
       onClick={toggleTheme}
-      className="btn-ghost"
+      className="btn-ghost h-10 my-auto"
     >
-      {theme === "light" ? "🌙 Dark" : "☀️ Light"}
+      {theme === "light" ? "🌙 " : "☀️ "} <span className="capitalize hidden sm:block">{theme}</span>
     </button>
   );
 };

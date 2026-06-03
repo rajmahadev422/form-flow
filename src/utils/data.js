@@ -23,8 +23,7 @@ export const features = [
   { icon: "🎨", label: "Dark & Light Mode" },
   { icon: "📱", label: "Mobile Responsive" },
   { icon: "📄", label: "PDF Export" },
-  { icon: "🗄️", label: "MongoDB Storage" },
-  { icon: "⚡", label: "Built with Next.js" },
+  { icon: "🔥", label: "Firebase"}
 ];
 
 export const FIELD_TYPES = [
@@ -59,3 +58,15 @@ export const handleShare = async (formId, title = "", desc) => {
     toast.error(err.message);
   }
 };
+
+export const FIELD = [
+  { type: "Text", desc: "Short answers" },
+  { type: "Textarea", desc: "Long answers" },
+  { type: "Number", desc: "Numeric input" },
+  { type: "Email", desc: "Email address" },
+  { type: "Dropdown", desc: "Select one option" },
+  { type: "Radio", desc: "Single choice" },
+  { type: "Checkbox", desc: "Multiple choice" },
+  { type: "Date", desc: "Date picker" },
+  { type: "File", desc: "Image, Pdf" },
+];

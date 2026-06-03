@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { lazy, Suspense } from "react";
 
-import { features, steps } from "../utils/data.js";
+import { features, FIELD, steps } from "../utils/data.js";
 import ThemeButton from "../components/ThemeButton";
 import AdvDisplay from "../components/AdvDisplay";
 import AuthButton from "../components/AuthButton";
@@ -98,17 +98,7 @@ export default function HomePage() {
             Supported field types
           </h3>
           <div className="flex flex-wrap gap-5">
-            {[
-              { type: "Text", desc: "Short answers" },
-              { type: "Textarea", desc: "Long answers" },
-              { type: "Number", desc: "Numeric input" },
-              { type: "Email", desc: "Email address" },
-              { type: "Dropdown", desc: "Select one option" },
-              { type: "Radio", desc: "Single choice" },
-              { type: "Checkbox", desc: "Multiple choice" },
-              { type: "Date", desc: "Date picker" },
-              { type: "File", desc: "Image, Pdf" },
-            ].map((f) => (
+            {FIELD.map((f) => (
               <div
                 key={f.type}
                 className="bg-(--bg-2) flex-auto border border-(--border) rounded p-3"
