@@ -96,7 +96,7 @@ export default function AuthButton() {
     <Link
       to="/login"
       onClick={() => console.log("Signin")}
-      className="btn-primary px-4 py-2 text-sm"
+      className="btn-primary"
     >
       Login
     </Link>
