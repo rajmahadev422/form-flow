@@ -108,6 +108,7 @@ export default function ViewForm() {
             Submit another
           </button>
         </div>
+        <FormFooter />
       </div>
     );
 

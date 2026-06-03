@@ -50,14 +50,12 @@ export default function FileUploadField({
 
       setUploading(true);
       try {
-        // ⚠️ REPLACE THESE STRINGS WITH YOUR CLOUDINARY CREDENTIALS
         const { VITE_CLOUD_NAME, VITE_UPLOAD_PRESET } = import.meta.env;
 
         const fd = new FormData();
         fd.append("file", file);
         fd.append("upload_preset", VITE_UPLOAD_PRESET);
 
-        // Hit Cloudinary's public asset delivery endpoint directly from the browser context
         const res = await fetch(
           `https://api.cloudinary.com/v1_1/${VITE_CLOUD_NAME}/auto/upload`,
           {
@@ -69,7 +67,6 @@ export default function FileUploadField({
         const data = await res.json();
         if (!res.ok) throw new Error(data.error?.message || "Upload failed");
 
-        // Pass the complete schema metadata back up to your parent component container
         onChange({
           url: data.secure_url,
           name: file.name,
@@ -85,7 +82,6 @@ export default function FileUploadField({
     [onChange],
   );
 
-  // Drag and Drop Event Callbacks
   const handleDrop = useCallback(
     (e) => {
       e.preventDefault();
@@ -105,7 +101,7 @@ export default function FileUploadField({
   const handleInputChange = (e) => {
     const file = e.target.files?.[0];
     if (file) processFile(file);
-    e.target.value = ""; // Reset value to enable re-upload of the same file name
+    e.target.value = "";
   };
 
   const handleRemove = () => {
