@@ -1,5 +1,4 @@
 import { Outlet, Navigate } from "react-router-dom";
-import Navbar from "../components/Navbar";
 import { useAuth } from "../utils/useAuth";
 import { Suspense, useEffect } from "react";
 import { onAuthStateChanged } from "firebase/auth";
@@ -15,11 +14,8 @@ export default function FormLayout() {
   }
 
   return (
-    <main>
-      <Navbar />
       <Suspense fallback={<BarWaveLoader />}>
         <Outlet />
       </Suspense>
-    </main>
   );
 }

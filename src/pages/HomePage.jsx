@@ -5,7 +5,6 @@ import { features, FIELD, steps } from "../utils/data.js";
 import ThemeButton from "../components/ThemeButton";
 import AdvDisplay from "../components/AdvDisplay";
 import AuthButton from "../components/AuthButton";
-import Navbar from "../components/Navbar";
 import { BarWaveLoader } from "../components/Loader.jsx";
 
 const ShowFeedback = lazy(() => import("../components/ShowFeedback"));
@@ -15,7 +14,6 @@ const EyeFace = lazy(() => import("../components/EyeFace"));
 export default function HomePage() {
   return (
     <div className="bg-(--bg) grid gap-5">
-      <Navbar />
 
       {/* Hero Section */}
       <section className="text-center px-5">

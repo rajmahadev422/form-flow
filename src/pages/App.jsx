@@ -8,6 +8,7 @@ import { auth } from "../utils/fb.js";
 import { useAuth } from "../utils/useAuth.js";
 import AdvDisplay from "../components/AdvDisplay";
 import { AuraLoader } from "../components/Loader.jsx";
+import Navbar from "../components/Navbar.jsx";
 
 export default function App() {
   const { set, loading, user } = useAuth();
@@ -35,6 +36,8 @@ export default function App() {
     <>
       <Toaster position="top-center" />
       <main className="block no-scroll">
+        <Navbar />
+
         <Outlet />
       </main>
       <AdvDisplay />

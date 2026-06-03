@@ -68,10 +68,10 @@ export default function FormResponse() {
     writeFile(workbook, safeFileName);
   };
 
-  if (loading || (!form && !responseData))
+  if (loading )
     return <BarWaveLoader />
 
-  if (!form || !owner)
+  if (!form || !owner || (!form && !responseDat))
     return (
       <FormNotFound />
     );
