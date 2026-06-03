@@ -3,7 +3,6 @@ import { lazy, Suspense } from "react";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import App from "./pages/App";
 import CreateForm from "./pages/CreateForm";
-import FormsPage from "./pages/FormPage";
 import FormLayout from "./pages/FormLayout";
 import HomePage from "./pages/HomePage";
 import ViewForm from "./pages/ViewForm";
@@ -11,6 +10,7 @@ import LoginPage from "./pages/LoginPage";
 import { BarWaveLoader } from "./components/Loader";
 
 const FormResponse = lazy(() => import("./pages/FormResponse"));
+const FormPage = lazy(() => import("./pages/FormPage"));
 
 const router = createBrowserRouter([
   {
@@ -35,25 +35,21 @@ const router = createBrowserRouter([
           },
           {
             path: ":id",
-            element: (
-              <Suspense fallback={<BarWaveLoader />}>
-                <FormResponse />
-              </Suspense>
-            ),
+            element: <FormResponse />,
           },
         ],
       },
       {
         path: "view/:id",
-        element: (
-          <Suspense fallback={<BarWaveLoader />}>
-            <ViewForm />
-          </Suspense>
-        ),
+        element: <ViewForm />
       },
       {
         path: "/login",
-        element: <LoginPage />,
+        element: (
+          <Suspense fallback={<BarWaveLoader />}>
+            <LoginPage />
+          </Suspense>
+        ),
       },
     ],
   },

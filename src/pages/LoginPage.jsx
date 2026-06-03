@@ -4,12 +4,13 @@ import { auth } from "../utils/fb.js";
 import { Link, Navigate } from "react-router-dom"; // Assumed matching your routing architecture
 import { useAuth } from "../utils/useAuth.js";
 
-const googleProvider = new GoogleAuthProvider();
 
 export default function LoginPage() {
   const { user, set, loading } = useAuth();
   const [isOpen, setIsOpen] = useState(false);
   const menuRef = useRef(null);
+
+  const googleProvider = new GoogleAuthProvider();
 
   const handleLogin = async () => {
     try {

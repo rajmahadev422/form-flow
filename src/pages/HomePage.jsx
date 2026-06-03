@@ -1,17 +1,20 @@
 import { Link } from "react-router-dom";
+import { lazy, Suspense } from "react";
+
 import { features, steps } from "../utils/data.js";
 import ThemeButton from "../components/ThemeButton";
 import AdvDisplay from "../components/AdvDisplay";
-import Feedback from "../components/Feedback";
-import ShowFeedback from "../components/ShowFeedback";
 import AuthButton from "../components/AuthButton";
 import Navbar from "../components/Navbar";
-import EyeFace from "../components/EyeFace.jsx";
+import { BarWaveLoader } from "../components/Loader.jsx";
+
+const ShowFeedback = lazy(() => import("../components/ShowFeedback"));
+const Feedback = lazy(() => import("../components/Feedback"));
+const EyeFace = lazy(() => import("../components/EyeFace"));
 
 export default function HomePage() {
   return (
     <div className="bg-(--bg) grid gap-5">
-
       <Navbar />
 
       {/* Hero Section */}
@@ -27,7 +30,9 @@ export default function HomePage() {
           <br />
           in minutes
         </h1>
-        <EyeFace />
+        <Suspense fallback={<BarWaveLoader />}>
+          <EyeFace />
+        </Suspense>
 
         <p className="text-(--text-2) text-lg leading-relaxed max-w-130 mx-auto mb-10">
           FormFlow lets you create, share, and analyze forms — with a clean
@@ -117,8 +122,11 @@ export default function HomePage() {
           </div>
         </div>
       </section>
-      <Feedback />
-      <ShowFeedback />
+
+      <Suspense fallback={<BarWaveLoader />}>
+        <Feedback />
+        <ShowFeedback />
+      </Suspense>
     </div>
   );
 }
