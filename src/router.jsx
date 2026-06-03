@@ -1,6 +1,6 @@
 import { lazy, Suspense } from "react";
 
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { createBrowserRouter, Outlet, RouterProvider } from "react-router-dom";
 import App from "./pages/App";
 import CreateForm from "./pages/CreateForm";
 import FormLayout from "./pages/FormLayout";
@@ -10,9 +10,10 @@ import LoginPage from "./pages/LoginPage";
 import { BarWaveLoader } from "./components/Loader";
 import NotFound from "./components/not-found/NotFound";
 import CommingSoon from "./components/not-found/CommingSoon";
-import Terms from "./pages/Terms";
-import Privacy from "./pages/Privacy";
-import Report from "./pages/Report";
+
+const Terms = lazy(() => import("./pages/Terms"));
+const Privacy = lazy(() => import("./pages/Privacy"));
+const Report = lazy(() => import("./pages/Report"));
 
 const FormResponse = lazy(() => import("./pages/FormResponse"));
 const FormPage = lazy(() => import("./pages/FormPage"));
@@ -46,7 +47,7 @@ const router = createBrowserRouter([
       },
       {
         path: "view/:id",
-        element: <ViewForm />
+        element: <ViewForm />,
       },
       {
         path: "/login",
@@ -57,21 +58,30 @@ const router = createBrowserRouter([
         ),
       },
       {
-        path: "/report",
-        element: <Report />
-      },
-      {
-        path: "/terms",
-        element: <Terms />
-      },
-      {
-        path: "/privacy",
-        element: <Privacy />
+        element: (
+          <Suspense fallback={<BarWaveLoader />}>
+            <Outlet />
+          </Suspense>
+        ),
+        children: [
+          {
+            path: "/report",
+            element: <Report />,
+          },
+          {
+            path: "/terms",
+            element: <Terms />,
+          },
+          {
+            path: "/privacy",
+            element: <Privacy />,
+          },
+        ],
       },
       {
         path: "*",
-        element: <NotFound />
-      }
+        element: <NotFound />,
+      },
     ],
   },
 ]);
