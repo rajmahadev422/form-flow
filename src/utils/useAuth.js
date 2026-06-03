@@ -1,6 +1,7 @@
 import { create } from "zustand";
 import { db } from "./fb";
 import { collection, getDocs, query, where } from "firebase/firestore";
+import toast from "react-hot-toast";
 
 export const useAuth = create((set) => ({
   loading: true,
@@ -30,7 +31,6 @@ export const useAuth = create((set) => ({
         });
       });
 
-      console.log(data)
       const feedbacks = data.map(({ a3hs05ff, uzck2r0j, ...rest }) => ({
         ...rest,
         rating: Number(uzck2r0j),
@@ -39,7 +39,7 @@ export const useAuth = create((set) => ({
 
       set({ feedbacks: feedbacks });
     } catch (err) {
-      console.log(err.message);
+      toast.error(err.message);
     } finally {
       set({ feedLoad: false });
     }

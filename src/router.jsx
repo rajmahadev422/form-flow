@@ -27,7 +27,7 @@ const router = createBrowserRouter([
         children: [
           {
             index: true,
-            element: <FormsPage />,
+            element: <FormPage />,
           },
           {
             path: "create",
