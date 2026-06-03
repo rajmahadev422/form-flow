@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom"; // Use "next/link" if you are using Next.js
 
 export default function Feedback() {
-  const feedbackUrl = 'https://form-flow-ashen.vercel.app/view/63XkBh1642VRBqyNVTII'
+  const feedbackUrl = `${window.location.origin}/view/63XkBh1642VRBqyNVTII`
 
   return (
     <div className="w-full max-w-5xl mx-auto my-10 px-4 no-print">

@@ -10,6 +10,9 @@ import LoginPage from "./pages/LoginPage";
 import { BarWaveLoader } from "./components/Loader";
 import NotFound from "./components/not-found/NotFound";
 import CommingSoon from "./components/not-found/CommingSoon";
+import Terms from "./pages/Terms";
+import Privacy from "./pages/Privacy";
+import Report from "./pages/Report";
 
 const FormResponse = lazy(() => import("./pages/FormResponse"));
 const FormPage = lazy(() => import("./pages/FormPage"));
@@ -55,15 +58,15 @@ const router = createBrowserRouter([
       },
       {
         path: "/report",
-        element: <CommingSoon />
+        element: <Report />
       },
       {
         path: "/terms",
-        element: <CommingSoon />
+        element: <Terms />
       },
       {
         path: "/privacy",
-        element: <CommingSoon />
+        element: <Privacy />
       },
       {
         path: "*",

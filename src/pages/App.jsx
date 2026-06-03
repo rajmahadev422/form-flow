@@ -41,6 +41,10 @@ export default function App() {
         <Outlet />
       </main>
       <AdvDisplay />
+      {/* Global Footer Copyright Segment */}
+        <div className="border-t border-(--border)/40 text-center text-xs p-5 text-(--text-3) select-none">
+          <p className="m-0">© {Date()} FormFlow Inc. All rights reserved. Data transparency protocols are audited routinely against strict systemic compliance parameters.</p>
+        </div>
     </>
   );
 }
