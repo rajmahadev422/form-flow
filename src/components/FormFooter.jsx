@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 export default function FormFooter() {
   return (
-    <footer className="w-full px-4 bg-(--bg) text-center no-print">
+    <footer className="w-full px-4 text-center no-print">
       {/* Subtle Divider line similar to Google Forms structure */}
       <div className="mx-auto border-(--border) my-4 opacity-60" />
 

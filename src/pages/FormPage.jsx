@@ -61,7 +61,7 @@ export default function FormsPage() {
           {forms.map((form, i) => (
             <div
               key={form.id}
-              className="bg-(--surface) border border-(--border) rounded p-4 gap-4 flex flex-col sm:flex-row fade-up transition-all hover:border-(--accent)/40"
+              className="bg-(--bg) border border-(--border) rounded p-4 gap-4 flex flex-col sm:flex-row fade-up transition-all hover:border-(--accent)/40"
               style={{ animationDelay: `${i * 0.1}s` }}
             >
               {/* Meta Content & Truncation Layer */}

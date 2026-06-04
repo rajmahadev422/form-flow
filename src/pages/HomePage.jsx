@@ -13,7 +13,7 @@ const EyeFace = lazy(() => import("../components/EyeFace"));
 
 export default function HomePage() {
   return (
-    <div className="bg-(--bg) grid gap-5">
+    <div className="grid gap-5">
 
       {/* Hero Section */}
       <section className="text-center px-5">

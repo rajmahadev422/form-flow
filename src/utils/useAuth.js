@@ -37,6 +37,7 @@ export const useAuth = create((set) => ({
         comment: a3hs05ff,
       }));
 
+      feedbacks.sort((a, b) => new Date(a.date.toDate()).toLocaleString() - new Date(b.date.toDate()).toLocaleString())
       set({ feedbacks: feedbacks });
     } catch (err) {
       toast.error(err.message);

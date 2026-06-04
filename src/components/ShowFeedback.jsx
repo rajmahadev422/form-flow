@@ -1,48 +1,9 @@
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom"; // Use "next/link" if you are utilizing Next.js
+import { Link } from "react-router-dom";
 import { useAuth } from "../utils/useAuth.js";
-import { BarWaveLoader } from "./Loader.jsx";
-// Mock Data structure mirroring a live responses database schema
-const mockFeedbacks = [
-  {
-    id: "1",
-    rating: 5,
-    comment:
-      "The form builder is incredibly snappy. The dynamic Cloudinary file uploading component works perfectly out of the box!",
-    date: "2026-06-02T10:30:00Z",
-  },
-  {
-    id: "2",
-    rating: 4,
-    comment:
-      "Very polished spreadsheet UI design. It would be amazing if we could live-edit cells directly inside the table view in a future release.",
-    date: "2026-06-01T15:45:00Z",
-  },
-  {
-    id: "3",
-    rating: 5,
-    comment:
-      "Excellent responsiveness on mobile. The Excel downloading module works flawlessly without generating any vulnerability audits.",
-    date: "2026-05-31T08:12:00Z",
-  },
-  {
-    id: "4",
-    rating: 3,
-    comment:
-      "Good UI elements overall, but I noticed some form title text overlaps slightly on very narrow mobile viewports before clipping.",
-    date: "2026-05-30T19:20:00Z",
-  },
-  {
-    id: "5",
-    rating: 2,
-    comment:
-      "The client-side signature collection works, but exposing the raw public unsigned upload preset string gives me some minor security concerns.",
-    date: "2026-05-28T11:05:00Z",
-  },
-];
+import { BarWaveLoader } from "./Loader";
 
 export default function ShowFeedback() {
-  // const [feedbacks] = useState(mockFeedbacks);
 
   const {getFeedback, feedbacks, feedLoad} = useAuth();
 
@@ -57,8 +18,7 @@ export default function ShowFeedback() {
   const averageRating = (
     feedbacks.reduce((acc, curr) => acc + curr.rating, 0) / totalReviews
   ).toFixed(1);
-
-  // Calculate distributions for the structural analytics graph bars
+  
   const ratingCounts = { 5: 0, 4: 0, 3: 0, 2: 0, 1: 0 };
   feedbacks.forEach((f) => ratingCounts[f.rating]++);
 
@@ -85,7 +45,7 @@ export default function ShowFeedback() {
   };
 
   return (
-    <div className="max-w-5xl mx-auto px-4 py-8 pb-16 bg-(--bg) min-h-screen">
+    <div className="max-w-5xl mx-auto px-4 py-8 pb-16 min-h-screen">
       {/* Header Context Segment */}
       <div className="no-print mb-8">
         <h1 className="font-['DM_Serif_Display',serif] text-3xl text-(--text) m-0 tracking-wide">
@@ -166,11 +126,13 @@ export default function ShowFeedback() {
             <div className="flex justify-between items-start flex-wrap gap-2">
               {/* Dynamic Badging Score container */}
               <div className="bg-(--bg-2) border border-(--border) px-3 py-1.5 rounded-lg flex items-center gap-2 shrink-0">
+                
                 <span className="text-xs font-bold font-mono text-(--text-2)">
                   {item.rating} / 5
                 </span>
                 <RenderStars count={item.rating} />
               </div>
+              <span className="text-(--text-2) text-sm">{new Date(item.date.toDate()).toLocaleString()}</span>
             </div>
 
             {/* Description Paragraph Container */}

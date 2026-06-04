@@ -84,7 +84,8 @@ export default function ViewForm() {
       </div>
     );
 
-  if (form.status === "completed") return <FormDeadline formTitle={form.title} />;
+  if (form.status === "completed")
+    return <FormDeadline formTitle={form.title} />;
 
   // State 3: Submission successful screen
   if (submitted)
@@ -116,7 +117,7 @@ export default function ViewForm() {
 
   return (
     <>
-      <div className="max-w-3xl mx-auto px-6 py-10">
+      <div className="max-w-3xl bg-(--bg-2) mx-auto px-6 py-10">
         {/* Form Context Info Top Header Card */}
         <div className="bg-(--surface) border border-(--border) rounded-xl p-7 mb-5 border-t-4 border-t-(--accent)">
           <h1 className="font-['DM_Serif_Display',serif] text-3xl mb-2">

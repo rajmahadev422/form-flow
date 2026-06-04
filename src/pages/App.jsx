@@ -35,7 +35,7 @@ export default function App() {
   return (
     <>
       <Toaster position="top-center" />
-      <main className="block no-scroll">
+      <main className="block no-scroll bg-(--bg-2)">
         <Navbar />
 
         <Outlet />
@@ -43,7 +43,7 @@ export default function App() {
       <AdvDisplay />
       {/* Global Footer Copyright Segment */}
         <div className="border-t border-(--border)/40 text-center text-xs p-5 text-(--text-3) select-none">
-          <p className="m-0">© {Date()} FormFlow Inc. All rights reserved. Data transparency protocols are audited routinely against strict systemic compliance parameters.</p>
+          <p className="m-0">© {new Date().toLocaleString()} FormFlow Inc. All rights reserved. Data transparency protocols are audited routinely against strict systemic compliance parameters.</p>
         </div>
     </>
   );

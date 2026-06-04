@@ -183,7 +183,7 @@ export default function EyeFace() {
   }, [applyMood, movePupil]);
 
   return (
-    <div className="bg-(--bg) text-(--text) p-6 flex flex-col items-center justify-center gap-6 font-sans select-none">
+    <div className="text-(--text) p-6 flex flex-col items-center justify-center gap-6 font-sans select-none">
       {/* Mood Header Tag Status */}
       <span
         className={`text-xs font-semibold tracking-widest uppercase transition-all duration-300 dynamic-text-color ${
