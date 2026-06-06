@@ -1,4 +1,4 @@
-import { useFormBuilder } from "../utils/useForm.js";
+import { useFormBuilder } from "../utils/useFormBuilder";
 
 export default function FieldCard({ field, index, total }) {
   const { updateField, removeField, moveField } = useFormBuilder();

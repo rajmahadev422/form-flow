@@ -6,6 +6,7 @@ A modern form builder and response management platform inspired by Google Forms.
 
 ## Features
 
+* AI-assisted Form Generation
 * Google Authentication with Firebase
 * Create and manage forms
 * Share forms using unique links, QR Code
@@ -124,16 +125,14 @@ Form owners can view submissions and export responses to Excel.
 
 ## Future Improvements
 
-* File Upload Questions
 * Response Analytics Dashboard
 * Custom Themes
 * Email Notifications
 * Team Collaboration
-* AI-assisted Form Generation
 
 ## Author
 
-Mahadev
+Mahadev Kumar
 
 ## License
 

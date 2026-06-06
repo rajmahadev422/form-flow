@@ -9,7 +9,7 @@ import ViewForm from "./pages/ViewForm";
 import LoginPage from "./pages/LoginPage";
 import { BarWaveLoader } from "./components/Loader";
 import NotFound from "./components/not-found/NotFound";
-import CommingSoon from "./components/not-found/CommingSoon";
+import RefreshPage from "./components/not-found/RefreshPage";
 
 const Terms = lazy(() => import("./pages/Terms"));
 const Privacy = lazy(() => import("./pages/Privacy"));
@@ -83,7 +83,7 @@ const router = createBrowserRouter([
         element: <NotFound />,
       },
     ],
-    errorElement: <NotFound />
+    errorElement: <RefreshPage />
   },
 ]);
 

@@ -151,6 +151,7 @@ export default function ViewForm() {
               {field.type === "text" && (
                 <input
                   className="input"
+                  type="text"
                   placeholder={field.placeholder}
                   value={values[field.id] || ""}
                   onChange={(e) => setValue(field.id, e.target.value)}
@@ -190,20 +191,6 @@ export default function ViewForm() {
                   value={values[field.id] || ""}
                   onChange={(e) => setValue(field.id, e.target.value)}
                 />
-              )}
-              {field.type === "select" && (
-                <select
-                  className="input"
-                  value={values[field.id] || ""}
-                  onChange={(e) => setValue(field.id, e.target.value)}
-                >
-                  <option value="">Select an option…</option>
-                  {field.options?.map((opt) => (
-                    <option key={opt} value={opt}>
-                      {opt}
-                    </option>
-                  ))}
-                </select>
               )}
               {field.type === "radio" && (
                 <div className="flex flex-col gap-2">

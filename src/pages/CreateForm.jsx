@@ -1,10 +1,12 @@
-import { useState } from "react";
-import { useForm, useFormBuilder } from "../utils/useForm.js";
+import { useEffect, useState } from "react";
+import { useForm } from "../utils/useForm.js";
 import { useNavigate } from "react-router-dom";
 import FieldCard from "../components/FieldCard";
 import { FIELD_TYPES } from "../utils/data";
 import toast from "react-hot-toast";
 import { useAuth } from "../utils/useAuth.js";
+import FormAi from "../components/FormAi.jsx";
+import { useFormBuilder } from "../utils/useFormBuilder.js";
 
 export default function CreateForm() {
   const {
@@ -17,8 +19,8 @@ export default function CreateForm() {
     reset,
   } = useFormBuilder();
 
-  const {saveForm} = useForm();
-  const {user} = useAuth();
+  const { saveForm } = useForm();
+  const { user } = useAuth();
 
   const [saving, setSaving] = useState(false);
   const [saved, setSaved] = useState(false);
@@ -35,10 +37,13 @@ export default function CreateForm() {
       return;
     }
     setSaving(true);
-    const status = await saveForm({title, uid: user.uid, description, status: "running", fields});
 
-    if(status) reset();
+    let data = { title, description, status: "running", fields };
+
+    const status = await saveForm({title, uid: user.uid, description, status: "running", fields});
     
+    if (status) reset();
+
     setSaving(false);
   };
 
@@ -52,6 +57,9 @@ export default function CreateForm() {
           Add fields, configure options, and save to get a shareable link
         </p>
       </div>
+<div>
+<FormAi />
+</div>
 
       {/* Primary Info Form Config */}
       <div className="bg-(--surface) border border-(--border) rounded p-6 mb-5">

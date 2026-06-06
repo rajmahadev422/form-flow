@@ -31,7 +31,6 @@ export const FIELD_TYPES = [
   { type: "long text", label: "Long Text", icon: "¶" },
   { type: "number", label: "Number", icon: "#" },
   { type: "email", label: "Email", icon: "@" },
-  { type: "select", label: "Dropdown", icon: "▾" },
   { type: "single choice", label: "Radio", icon: "◉" },
   { type: "multiple choice", label: "Checkbox", icon: "☑" },
   { type: "date", label: "Date", icon: "📅" },

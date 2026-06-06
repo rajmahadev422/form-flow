@@ -14,13 +14,14 @@ export default function FormResponse() {
   const { id } = useParams();
   const printRef = useRef(null);
 
-  const { getResponseData, responseData, loading, isFormOwner, owner } = useResponse();
+  const { getResponseData, responseData, loading, isFormOwner, owner } =
+    useResponse();
   const { getFormById, form } = useSubmitForm();
   const { user } = useAuth();
 
   useEffect(() => {
     if (id && user?.uid) {
-      isFormOwner(id, user.id)
+      isFormOwner(id, user.id);
       getResponseData(id, user.uid);
       getFormById(id);
     }
@@ -68,16 +69,12 @@ export default function FormResponse() {
     writeFile(workbook, safeFileName);
   };
 
-  if (loading )
-    return <BarWaveLoader />
+  if (loading) return <BarWaveLoader />;
 
-  if (!form || !owner || (!form && !responseDat))
-    return (
-      <FormNotFound />
-    );
+  if (!form || !owner || (!form && !responseDat)) return <FormNotFound />;
 
   return (
-    <div className="max-w-5xl mx-auto px-6 py-4">
+    <div className="mx-auto px-6 py-4">
       {/* Interactive Desktop Header */}
       <div className="no-print flex justify-between items-start mb-8 flex-wrap gap-4">
         <div>
@@ -173,15 +170,16 @@ export default function FormResponse() {
                         {/* Dynamic Field Data Cells */}
                         {form.fields.map((field) => {
                           let val = sub.data?.[field.id];
-                          if (typeof val === "object") val = val.url;
-                          const display = Array.isArray(val)
-                            ? val.join(", ")
-                            : val || "—";
+                          let display = val || "-";
+
+                          if(Array.isArray(val)) display = val.join(", ");
+
+                          else if (typeof val === "object") display = val.url;
 
                           return (
                             <td
                               key={field.id}
-                              className="px-4 py-3 border-r border-(--border) max-w-sm truncate"
+                              className="px-4 py-3 border-r border-(--border)"
                               title={display !== "—" ? display : undefined} // Tooltip showing full text on hover
                             >
                               <span
