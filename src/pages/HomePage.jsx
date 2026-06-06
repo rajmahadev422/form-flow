@@ -13,8 +13,7 @@ const EyeFace = lazy(() => import("../components/EyeFace"));
 
 export default function HomePage() {
   return (
-    <div className="grid gap-5">
-
+    <div className="grid gap-5 pt-4">
       {/* Hero Section */}
       <section className="text-center px-5">
         <div className="inline-flex items-center gap-2 bg-(--accent-light) text-(--accent) rounded-full px-4 py-1.2 text-xs font-semibold mb-6 tracking-widest">
@@ -61,7 +60,7 @@ export default function HomePage() {
       </section>
 
       {/* How it Works & Fields Section */}
-      <section className="mx-auto max-w-5xl px-6 py-8">
+      <section className="mx-auto max-w-5xl px-4 py-8">
         <h2 className="font-['DM_Serif_Display',serif] text-[clamp(1.6rem,4vw,2.2rem)] text-center text-(--text) mb-3">
           How it works
         </h2>
@@ -74,18 +73,21 @@ export default function HomePage() {
           {steps.map((step, i) => (
             <div
               key={i}
-              className="bg-(--surface) border border-(--border) flex-auto rounded-xl p-7 relative"
+              className="bg-(--surface) border border-(--border) flex-auto rounded p-7 relative"
             >
-              <div className="absolute top-4 right-4 text-xs font-bold text-(--text-3) font-['DM_Serif_Display',serif]">
-                0{i + 1}
+              <div>
+                <div className="absolute top-4 right-4 text-xs font-bold text-(--text-3) font-['DM_Serif_Display',serif]">
+                  0{i + 1}
+                </div>
+                <div className="text-3xl mb-4">{step.icon}</div>
+                <h3 className="text-base font-semibold text-(--text) mb-2.5">
+                  {step.title}
+                </h3>
+                <p className="text-(--text-2) text-[0.875rem] leading-relaxed m-0">
+                  {step.desc}
+                </p>
               </div>
-              <div className="text-3xl mb-4">{step.icon}</div>
-              <h3 className="text-base font-semibold text-(--text) mb-2.5">
-                {step.title}
-              </h3>
-              <p className="text-(--text-2) text-[0.875rem] leading-relaxed m-0">
-                {step.desc}
-              </p>
+              <img src={step.image} className="mt-3" alt={step.title} />
             </div>
           ))}
         </div>

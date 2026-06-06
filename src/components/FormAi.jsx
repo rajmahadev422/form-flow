@@ -7,7 +7,7 @@ export default function () {
   const { addFormByAi, loading } = useFormBuilder();
 
   return (
-    <div className="w-full max-w-2xl mx-auto my-6 px-4">
+    <div className="w-full max-w-3xl mx-auto my-6 px-4">
       <div className="flex flex-col gap-2.5">
         {/* Label with a subtle AI sparkle icon */}
         <label
@@ -19,14 +19,14 @@ export default function () {
 
         {/* Unified Input + Button Container */}
         <div
-          className={`relative flex items-center bg-(--surface) border rounded-2xl p-1.5 transition-all duration-300 shadow-xs focus-within:border-(--accent) focus-within:ring-4 focus-within:ring-(--accent)/10 ${
+          className={`relative flex items-center bg-(--surface) border rounded p-1.5 transition-all duration-300 shadow-xs focus-within:border-(--accent) focus-within:ring-4 focus-within:ring-(--accent)/10 ${
             loading
               ? "border-(--border) opacity-80 cursor-wait"
               : "border-(--border) hover:border-(--border-2)"
           }`}
         >
           {/* Search/Prompt Input Field */}
-          <input
+          <textarea
             id="prompt"
             type="text"
             readOnly={loading}
@@ -51,12 +51,12 @@ export default function () {
             {loading ? (
               <>
                 <span className="inline-block animate-spin text-xs">⏳</span>
-                <span>Building...</span>
+                <span className="hidden sm:block">Building...</span>
               </>
             ) : (
               <>
                 <span>⚡</span>
-                <span>Generate</span>
+                <span className="hidden sm:block">Generate</span>
               </>
             )}
           </button>

@@ -4,16 +4,19 @@ export const steps = [
   {
     icon: "✏️",
     title: "Create a Form",
+    image: '/form-builder.png',
     desc: "Use the builder to add fields — text, dropdowns, checkboxes, dates, and more. Give your form a title and description.",
   },
   {
     icon: "🔗",
-    title: "Share the Link",
-    desc: "Each form gets a unique link. Share it with anyone — they can fill it from any device without needing an account.",
+    title: "Share the Form",
+    image: '/form-preview.png',
+    desc: "Each form gets a unique link. Share it with anyone — they can fill it from any device without needing an account. or download the QR",
   },
   {
     icon: "📊",
     title: "View Responses",
+    image: '/response-page.png',
     desc: "All submissions are collected in the Data page. Download them as a PDF with a single click.",
   },
 ];

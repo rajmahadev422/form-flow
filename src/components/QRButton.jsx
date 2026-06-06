@@ -264,11 +264,11 @@ export default function QRButton({ formId }) {
     <button
       onClick={downloadQRCode}
       disabled={generating}
-      className="bg-(--surface) border border-(--border) text-(--text-2) hover:text-(--text) hover:border-(--accent)/30 px-4 py-2.5 rounded-xl text-xs font-semibold tracking-wide uppercase inline-flex items-center gap-2 transition-all duration-200 cursor-pointer disabled:opacity-50 disabled:cursor-wait active:scale-[0.97] shadow-xs hover:shadow-sm group"
+      className="rounded-full text-(--text-2) hover:text-(--text) items-center gap-2 transition-all duration-100 cursor-pointer disabled:opacity-50 disabled:cursor-wait active:scale-[0.97] group"
       title="Download shareable QR Card"
     >
-      <span className="text-sm transition-transform duration-300 group-hover:rotate-12 group-hover:scale-110">
-        {generating ? "⏳" : "𖣯"}
+      <span className="transition-all border border-(--border) p-3 rounded-2xl text-sm duration-100 hover:scale-110">
+        {generating ? "⏳" : "𖣯 Download QR"}
       </span>
     </button>
   );

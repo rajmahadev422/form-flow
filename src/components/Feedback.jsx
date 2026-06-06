@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom"; // Use "next/link" if you are using Next.js
 
 export default function Feedback() {
-  const feedbackUrl = `${window.location.origin}/view/63XkBh1642VRBqyNVTII`
+  const feedbackUrl = `https://form-flow-ashen.vercel.app/view/63XkBh1642VRBqyNVTII`;
 
   return (
     <div className="w-full max-w-5xl mx-auto my-10 px-4 no-print">
@@ -12,7 +12,7 @@ export default function Feedback() {
 
         {/* Left Side: Scannable QR Code Panel */}
         <div className="flex flex-col items-center shrink-0 text-center select-none w-full max-w-2xl sm:max-w-none sm:w-auto">
-          <div className="w-40 h-40 p-2 rounded-lg border border-(--border)/40 flex items-center justify-center shadow-xs">
+          <div className="w-40 h-40 overflow-hidden p-2 rounded-lg border border-(--border)/40 flex items-center justify-center shadow-xs">
             <img 
               src='/feedback-qr.png' 
               alt="Scan for feedback form link" 

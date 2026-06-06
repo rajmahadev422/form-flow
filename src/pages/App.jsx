@@ -1,4 +1,4 @@
-import { Link, Outlet } from "react-router-dom";
+import { Link, Outlet, useLocation } from "react-router-dom";
 import ThemeButton from "../components/ThemeButton";
 import { features, steps } from "../utils/data.js";
 import { Toaster } from "react-hot-toast";
@@ -12,6 +12,8 @@ import Navbar from "../components/Navbar.jsx";
 
 export default function App() {
   const { set, loading, user } = useAuth();
+
+  const path = useLocation().pathname.split('/')[1];
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (firebaseUser) => {
@@ -36,7 +38,7 @@ export default function App() {
     <>
       <Toaster position="top-center" />
       <main className="block no-scroll bg-(--bg-2)">
-        <Navbar />
+        {path !== 'view' ? <Navbar /> : ""}
 
         <Outlet />
       </main>
